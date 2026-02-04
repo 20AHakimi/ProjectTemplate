@@ -91,4 +91,27 @@
             this.pListeners.Remove(listener);
         }
     }
+
+    public abstract class Event<T0, T1, T2, T3>
+    {
+        protected List<Action<T0, T1, T2, T3>> pListeners = new();
+
+        public void Raise(T0 arg0, T1 arg1, T2 arg2, T3 arg3)
+        {
+            for (int i = this.pListeners.Count; i >= 0; i--)
+            {
+                this.pListeners[i].Invoke(arg0, arg1, arg2, arg3);
+            }
+        }
+
+        public void RegisterListener(Action<T0, T1, T2, T3> listener)
+        {
+            this.pListeners.Add(listener);
+        }
+
+        public void UnregisterListener(Action<T0, T1, T2, T3> listener)
+        {
+            this.pListeners.Remove(listener);
+        }
+    }
 }

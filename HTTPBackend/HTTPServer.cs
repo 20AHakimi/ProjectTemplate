@@ -65,14 +65,7 @@ namespace ProjectTemplate.HTTPBackend {
                 HttpResponse _res = context.Response;
 
                 //Insert routing code here, send copies of - context, _req and _res
-
-                //Example response
-                _res.StatusCode = 200;
-                _res.ContentType = "text/plain";
-                await _res.WriteAsync("Kestral CLI Server is running\n");
-                await _res.WriteAsync($"Method: {_req.Method}\n");
-                await _res.WriteAsync($"Path: {_req.Path}\n");
-                await _res.WriteAsync($"Remote IP: {context.Connection.RemoteIpAddress}\n");
+                _router.Raise(_req.Path, context, _req, _res)
             })
 
             _serverTask = _app.RunAsync();
@@ -115,6 +108,7 @@ namespace ProjectTemplate.HTTPBackend {
         private Task? _serverTask = null;
         private int _port = 0;
         private string _webroot = "";
+        private HTTPRouter _router = new();
         //Events
         private Event_Log _httpLog = new();
     }
