@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Http;
-using WebInterface.EventSystem;
+using ProjectTemplate.EventSystem;
 
 namespace ProjectTemplate.HTTPBackend
 {
-	public class HTTPRouter : Event<string, HTTPContext, HTTPRequest, HTTPResponse>
+	public class HTTPRouter : Event<string, HttpContext, HttpRequest, HttpResponse>
 	{
 		//Path, Context, Request, Response
 	}

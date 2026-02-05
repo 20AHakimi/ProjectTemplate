@@ -1,8 +1,26 @@
+using Microsoft.AspNetCore.Http;
+
 namespace ProjectTemplate.HTTPBackend
 {
-    public class HTTPEndPoint
+    public abstract class HTTPEndPoint
     {
+        protected string pName = "";
 
+        public HTTPEndPoint(string _path)
+        {
+            pName = _path;
+        }
+
+        public void Trigger(string _path, HttpContext _context, HttpRequest _req, HttpResponse _res)
+        {
+            if (_path != pName)
+            {
+                return;
+            }
+            Execute(_context, _req, _res);
+        }
+
+        protected abstract void Execute(HttpContext _context, HttpRequest _req, HttpResponse _res);
     }
 }
 /*//Example response

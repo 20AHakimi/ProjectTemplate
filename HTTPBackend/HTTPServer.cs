@@ -1,14 +1,16 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 
-using WebInterface.EventSystem;
+using ProjectTemplate.EventSystem;
+using ProjectTemplate.HTTPBackend;
 
 namespace ProjectTemplate.HTTPBackend {
     public class HTTPServer {
+        public HTTPRouter router { get { return _router; } }
+
         public HTTPServer(int port = 8080, string webRoot = "wwwroot")
         {
             this._port = port;
@@ -65,7 +67,7 @@ namespace ProjectTemplate.HTTPBackend {
                 HttpResponse _res = context.Response;
 
                 //Insert routing code here, send copies of - context, _req and _res
-                _router.Raise(_req.Path, context, _req, _res)
+                _router.Raise(_req.Path, context, _req, _res);
             })
 
             _serverTask = _app.RunAsync();
