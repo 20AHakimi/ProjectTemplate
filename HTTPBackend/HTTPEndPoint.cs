@@ -11,16 +11,16 @@ namespace ProjectTemplate.HTTPBackend
             pName = _path;
         }
 
-        public void Trigger(string _path, HttpContext _context, HttpRequest _req, HttpResponse _res)
+        public async Task Trigger(string _path, HttpContext _context, HttpRequest _req, HttpResponse _res)
         {
             if (_path != pName)
             {
                 return;
             }
-            Execute(_context, _req, _res);
+            await Execute(_context, _req, _res);
         }
 
-        protected abstract void Execute(HttpContext _context, HttpRequest _req, HttpResponse _res);
+        protected virtual async Task Execute(HttpContext _context, HttpRequest _req, HttpResponse _res) { }
     }
 }
 /*//Example response

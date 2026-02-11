@@ -7,8 +7,13 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             HTTPServer _server = new();
+
+            ProjectTemplate.EndPoints.Time _time = new("/time");
+            _server.router.RegisterListener(_time.Trigger);
+
             bool _running = true;
             _server.Start();
+
             while (_running)
             {
                 Console.Write(": ");
