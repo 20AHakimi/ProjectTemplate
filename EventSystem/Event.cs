@@ -1,4 +1,7 @@
-﻿namespace ProjectTemplate.EventSystem
+﻿using System.Text.Json.Serialization.Metadata;
+using System.Threading.Tasks;
+
+namespace ProjectTemplate.EventSystem
 {
     public class Event
     {
@@ -10,6 +13,20 @@
             {
                 this.pListeners[i].Invoke();
             }
+        }
+
+        public virtual async Task RaiseAsync()
+        {
+            Action[] _listenerSnapshot = this.pListeners.ToArray();
+
+            List<Task> _tasks = new(_listenerSnapshot.Length);
+
+            for (int i = _listenerSnapshot.Length; i >= 0; i--)
+            {
+                _tasks.Add(Task.Run(() => _listenerSnapshot[i].Invoke()));
+            }
+
+            await Task.WhenAll(_tasks);
         }
 
         public void RegistererListener(Action listener)
@@ -35,6 +52,20 @@
             }
         }
 
+        public virtual async Task RaiseAsync(T0 arg0)
+        {
+            Action<T0>[] _listenerSnapshot = this.pListeners.ToArray();
+
+            List<Task> _tasks = new(_listenerSnapshot.Length);
+
+            for (int i = _listenerSnapshot.Length; i >= 0; i--)
+            {
+                _tasks.Add(Task.Run(() => _listenerSnapshot[i].Invoke(arg0)));
+            }
+
+            await Task.WhenAll(_tasks);
+        }
+
         public void RegisterListener(Action<T0> listener)
         {
             this.pListeners.Add(listener);
@@ -56,6 +87,20 @@
             {
                 this.pListeners[i].Invoke(arg0, arg1);
             }
+        }
+
+        public virtual async Task RaiseAsync(T0 arg0, T1 arg1)
+        {
+            Action<T0, T1>[] _listenerSnapshot = this.pListeners.ToArray();
+
+            List<Task> _tasks = new(_listenerSnapshot.Length);
+
+            for (int i = _listenerSnapshot.Length; i >= 0; i--)
+            {
+                _tasks.Add(Task.Run(() => _listenerSnapshot[i].Invoke(arg0, arg1)));
+            }
+
+            await Task.WhenAll(_tasks);
         }
 
         public void RegisterListener(Action<T0, T1> listener)
@@ -81,6 +126,20 @@
             }
         }
 
+        public virtual async Task RaiseAsync(T0 arg0, T1 arg1, T2 arg2)
+        {
+            Action<T0, T1, T2>[] _listenerSnapshot = this.pListeners.ToArray();
+
+            List<Task> _tasks = new(_listenerSnapshot.Length);
+
+            for (int i = _listenerSnapshot.Length; i >= 0; i--)
+            {
+                _tasks.Add(Task.Run(() => _listenerSnapshot[i].Invoke(arg0, arg1, arg2)));
+            }
+
+            await Task.WhenAll(_tasks);
+        }
+
         public void RegisterListener(Action<T0, T1, T2> listener)
         {
             this.pListeners.Add(listener);
@@ -102,6 +161,20 @@
             {
                 this.pListeners[i].Invoke(arg0, arg1, arg2, arg3);
             }
+        }
+
+        public virtual async Task RaiseAsync(T0 arg0, T1 arg1, T2 arg2, T3 arg3)
+        {
+            Action<T0, T1, T2, T3>[] _listenerSnapshot = this.pListeners.ToArray();
+
+            List<Task> _tasks = new(_listenerSnapshot.Length);
+
+            for (int i = _listenerSnapshot.Length; i >= 0; i--)
+            {
+                _tasks.Add(Task.Run(() => _listenerSnapshot[i].Invoke(arg0, arg1, arg2, arg3)));
+            }
+
+            await Task.WhenAll(_tasks);
         }
 
         public void RegisterListener(Action<T0, T1, T2, T3> listener)
